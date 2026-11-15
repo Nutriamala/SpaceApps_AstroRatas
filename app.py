@@ -76,28 +76,11 @@ p, span, div, li { font-family: 'Space Grotesk', sans-serif; }
     font-size: 0.75rem; 
 }
 
-/* =========================================
-   🚀 HEADER FLEXBOX (Evita que los logos se apilen)
-   ========================================= */
-.header-flex {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%;
-    margin-top: 1rem;
-    margin-bottom: 2rem;
+/* Base para el logo central */
+.logo-centro {
+    max-width: 100%;
+    height: auto;
 }
-.header-item {
-    flex: 1;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-.center-img { flex: 3; }
-.logo-side { max-width: 150px; width: 100%; height: auto; object-fit: contain; }
-.logo-center { max-width: 400px; width: 100%; height: auto; object-fit: contain; }
-.by-container { align-items: flex-end; padding-top: 50px; } /* Empuja el logo "by" hacia abajo */
 
 /* =========================================
    📱 OPTIMIZACIÓN RESPONSIVE (CELULARES)
@@ -106,10 +89,10 @@ p, span, div, li { font-family: 'Space Grotesk', sans-serif; }
     h1 { font-size: 2rem !important; }
     h2 { font-size: 1.5rem !important; }
     
-    .header-flex { gap: 10px; }
-    .logo-side { max-width: 60px; }
-    .logo-center { max-width: 200px; }
-    .by-container { padding-top: 20px; }
+    /* AGRANDAMOS EL LOGO CENTRAL "WW" SOLO EN CELULAR */
+    .logo-centro { 
+        min-width: 250px !important; 
+    }
     
     .team-circle { width: 80px !important; height: 80px !important; }
     .team-name { font-size: 0.8rem !important; }
@@ -137,24 +120,30 @@ else:
 css += "</style>"
 st.markdown(css, unsafe_allow_html=True)
 
-# 3. HEADER (Convertido a HTML/CSS para ser perfecto en celular)
+# 3. HEADER (LILLOGUITO 200px Y WW RESPONSIVE)
 lillo_b64 = obtener_base64("lilloguito.png")
 ww_b64 = obtener_base64("ww.png")
 by_b64 = obtener_base64("by.png")
 
-lillo_img = f'<img src="data:image/png;base64,{lillo_b64}" class="logo-side">' if lillo_b64 else ''
-ww_img = f'<img src="data:image/png;base64,{ww_b64}" class="logo-center">' if ww_b64 else '<h1 style="color:#F8F7F2; text-align:center;">DANCING WITH THE SARS</h1>'
-by_img = f'<img src="data:image/png;base64,{by_b64}" class="logo-side">' if by_b64 else '<span style="color:#FC8E42; font-style:italic;">by astroRatas</span>'
+# Mantenemos tus 200px para lilloguito
+lillo_img = f'<img src="data:image/png;base64,{lillo_b64}" style="width: 200px;">' if lillo_b64 else ''
+# Le metemos la clase para controlarlo desde el celular
+ww_img = f'<img src="data:image/png;base64,{ww_b64}" class="logo-centro">' if ww_b64 else '<h1 style="color:#F8F7F2; text-align:center;">DANCING WITH THE SARS</h1>'
+by_img = f'<img src="data:image/png;base64,{by_b64}" style="width: 150px;">' if by_b64 else '<span style="color:#FC8E42; font-style:italic;">by astroRatas</span>'
 
 st.markdown(f"""
-<div class="header-flex">
-    <div class="header-item">{lillo_img}</div>
-    <div class="header-item center-img">{ww_img}</div>
-    <div class="header-item by-container">{by_img}</div>
+<div style="display: flex; flex-direction: row; justify-content: space-between; align-items: center; width: 100%; margin-top: 1rem; margin-bottom: 2rem;">
+<div style="flex: 1; display: flex; justify-content: flex-start; align-items: center;">
+{lillo_img}
+</div>
+<div style="flex: 3; display: flex; justify-content: center; align-items: center;">
+{ww_img}
+</div>
+<div style="flex: 1; display: flex; justify-content: flex-end; align-items: flex-end; padding-top: 60px;">
+{by_img}
+</div>
 </div>
 """, unsafe_allow_html=True)
-
-st.markdown("<br>", unsafe_allow_html=True)
 
 # 4. INTRODUCTION & YOUTUBE VIDEO
 intro_col, video_col = st.columns([1, 1], gap="large")
@@ -303,7 +292,7 @@ with col_centro:
 
 st.markdown("<br><br><br>", unsafe_allow_html=True)
 
-# 9. TEAM SECTION (Limpio y unificado)
+# 9. TEAM SECTION
 st.markdown("<h2 style='text-align: center;'>Meet the crew</h2><br>", unsafe_allow_html=True)
 
 t1, t2, t3, t4, t5 = st.columns(5)
@@ -323,10 +312,9 @@ def render_team_member(columna, ruta_imagen, nombre, rol):
             <div class="team-role">{rol}</div>
         """, unsafe_allow_html=True)
 
-render_team_member(t1, "checho.png", "Sergio Carrasquilla", "Data Scientist")
-render_team_member(t2, "camila.png", "Camila Perez", "Frontend Dev")
-render_team_member(t3, "angie.png", "Angie Gómez", "Radar Specialist")
-render_team_member(t4, "leon.png", "Leonardo Tovar", "UX/UI Design")
-render_team_member(t5, "moteo.png", "Mateo Maldonado", "Project Manager")
-
+render_team_member(t1, "checho.png", "Sergio Carrasquilla", "Physics Student / Data Processing")
+render_team_member(t2, "camila.png", "Camila Perez", "Physics Student / Data Analyst")
+render_team_member(t3, "angie.png", "Angie Gómez", "Physics Student / Frontend & UI Design")
+render_team_member(t4, "leon.png", "Leonardo Tovar", "Physics Student / Image Processing")
+render_team_member(t5, "moteo.png", "Mateo Maldonado", "Physics Student / Remote Sensing")
 st.markdown("<br><br>", unsafe_allow_html=True)
