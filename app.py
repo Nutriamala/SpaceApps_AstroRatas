@@ -7,7 +7,7 @@ from streamlit_image_comparison import image_comparison
 import folium
 from streamlit_folium import st_folium
 
-# 1. Page Configuration (Icono actualizado)
+# 1. Page Configuration
 st.set_page_config(page_title="Dancing with the SARS", page_icon="icon.png", layout="wide", initial_sidebar_state="collapsed")
 
 def obtener_base64(ruta_archivo):
@@ -52,7 +52,7 @@ p, span, div, li { font-family: 'Space Grotesk', sans-serif; }
 [data-testid="stMetricValue"] { color: #F8F7F2 !important; font-size: 3.5rem !important; font-weight: 700; }
 [data-testid="stMetricLabel"] { color: #FA5C5E !important; font-size: 1.2rem !important; }
 
-/* CSS para los círculos del equipo (ESTÁTICOS Y COMPACTOS) */
+/* Círculos del equipo */
 .team-circle {
     border-radius: 50%;
     width: 125px;
@@ -74,15 +74,59 @@ p, span, div, li { font-family: 'Space Grotesk', sans-serif; }
     text-align: center; 
     color: #FA5C5E; 
     font-size: 0.75rem; 
-}"""
+}
+
+/* =========================================
+   🚀 HEADER FLEXBOX (Evita que los logos se apilen)
+   ========================================= */
+.header-flex {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    margin-top: 1rem;
+    margin-bottom: 2rem;
+}
+.header-item {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.center-img { flex: 3; }
+.logo-side { max-width: 150px; width: 100%; height: auto; object-fit: contain; }
+.logo-center { max-width: 400px; width: 100%; height: auto; object-fit: contain; }
+.by-container { align-items: flex-end; padding-top: 50px; } /* Empuja el logo "by" hacia abajo */
+
+/* =========================================
+   📱 OPTIMIZACIÓN RESPONSIVE (CELULARES)
+   ========================================= */
+@media (max-width: 768px) {
+    h1 { font-size: 2rem !important; }
+    h2 { font-size: 1.5rem !important; }
+    
+    .header-flex { gap: 10px; }
+    .logo-side { max-width: 60px; }
+    .logo-center { max-width: 200px; }
+    .by-container { padding-top: 20px; }
+    
+    .team-circle { width: 80px !important; height: 80px !important; }
+    .team-name { font-size: 0.8rem !important; }
+    .team-role { font-size: 0.7rem !important; margin-bottom: 20px !important; }
+    
+    iframe { height: 350px !important; }
+}
+"""
 
 if fondo_gif:
     css += f"""
     .stApp {{
         background-color: #011124;
         background-image: linear-gradient(to bottom, rgba(1, 17, 36, 0) 0%, rgba(1, 17, 36, 1) 600px), url("data:image/gif;base64,{fondo_gif}");
-        background-size: 100% auto;
+        background-size: cover; 
         background-position: top center;
+        background-attachment: fixed;
         background-repeat: no-repeat;
         color: #F8F7F2;
     }}
@@ -93,22 +137,22 @@ else:
 css += "</style>"
 st.markdown(css, unsafe_allow_html=True)
 
-# 3. HEADER
-head1, head2, head3 = st.columns([1, 3.5, 1], gap="large")
+# 3. HEADER (Convertido a HTML/CSS para ser perfecto en celular)
+lillo_b64 = obtener_base64("lilloguito.png")
+ww_b64 = obtener_base64("ww.png")
+by_b64 = obtener_base64("by.png")
 
-with head1:
-    st.markdown("<br><br><br><br>", unsafe_allow_html=True)
-    try: st.image("lilloguito.png", use_container_width=True)
-    except: pass
-with head2:
-    try: st.image("ww.png", use_container_width=True)
-    except: st.warning("⚠️ Missing 'ww.png'.")
-with head3:
-    st.markdown("<br><br><br><br><br><br>", unsafe_allow_html=True)
-    try: 
-        st.image("by.png", width=150)
-    except: 
-        st.info("by astroRatas")
+lillo_img = f'<img src="data:image/png;base64,{lillo_b64}" class="logo-side">' if lillo_b64 else ''
+ww_img = f'<img src="data:image/png;base64,{ww_b64}" class="logo-center">' if ww_b64 else '<h1 style="color:#F8F7F2; text-align:center;">DANCING WITH THE SARS</h1>'
+by_img = f'<img src="data:image/png;base64,{by_b64}" class="logo-side">' if by_b64 else '<span style="color:#FC8E42; font-style:italic;">by astroRatas</span>'
+
+st.markdown(f"""
+<div class="header-flex">
+    <div class="header-item">{lillo_img}</div>
+    <div class="header-item center-img">{ww_img}</div>
+    <div class="header-item by-container">{by_img}</div>
+</div>
+""", unsafe_allow_html=True)
 
 st.markdown("<br>", unsafe_allow_html=True)
 
@@ -128,7 +172,8 @@ with video_col:
     st.video("https://youtu.be/zM_0aXxGN6g?si=QyNhjol2RtQhAAjM")
 
 st.markdown("<br><br>", unsafe_allow_html=True)
-#expander para info
+
+# Expander para info
 with st.expander("💻 ACCEDER A REGISTROS DE SISTEMA (DATOS TÉCNICOS)"):
     st.markdown("""
     **Transmission Logs:**
@@ -163,7 +208,6 @@ map_col, panel_col = st.columns([7, 3], gap="large")
 with map_col:
     st.subheader("🌐 Real-Time Satellite Mapping (NISAR)")
     
-    # Creamos un mapa de Folium centrado en el Chocó con capa de Imagen Satelital Real
     m = folium.Map(
         location=[5.2, -76.8], 
         zoom_start=6.5, 
@@ -171,17 +215,15 @@ with map_col:
         attr="Esri World Imagery"
     )
     
-    # Agregamos los 3 puntos de investigación (puedes cambiar las coordenadas luego)
     folium.CircleMarker([5.6945, -76.6611], radius=10, color="#FA5C5E", fill=True, fill_color="#FA5C5E", tooltip="Click: Quibdó (North)").add_to(m)
     folium.CircleMarker([5.7125, -77.2675], radius=10, color="#FC8E42", fill=True, fill_color="#FC8E42", tooltip="Click: Nuquí (Coast)").add_to(m)
     folium.CircleMarker([4.1667, -76.9667], radius=10, color="#F8F7F2", fill=True, fill_color="#F8F7F2", tooltip="Click: San Juan (South)").add_to(m)
 
-    # Renderizamos el mapa y guardamos los datos de interacción
     mapa_interactivo = st_folium(m, height=450, use_container_width=True)
+
 with panel_col:
     st.subheader("⚡ Data Analysis")
     
-    # Lógica que lee el clic del mapa y cambia la gráfica
     if mapa_interactivo and mapa_interactivo.get("last_object_clicked"):
         lat_clic = mapa_interactivo["last_object_clicked"]["lat"]
         
@@ -200,11 +242,9 @@ with panel_col:
             st.markdown("<span style='color:#F8F7F2;'>Alert Level: 110 ha transformed</span>", unsafe_allow_html=True)
             st.bar_chart(pd.DataFrame({'Deforestation': [50, 70, 90, 110]}, index=['2021', '2022', '2023', '2024']), color="#F8F7F2")
     else:
-        # Mensaje por defecto cuando no han tocado nada
         st.info("👆 Click on a red marker on the map to analyze the sector data.")
         st.bar_chart(pd.DataFrame({'Deforestation': [0, 0, 0, 0]}, index=['2021', '2022', '2023', '2024']), color="#333333")
 
-    # A partir de aquí estaba el error de espacios. Ya está corregido (alineado con los if de arriba)
     st.markdown("<br>", unsafe_allow_html=True)
     
     if st.button("🛰️ SYNCHRONIZE WITH SATELLITE", use_container_width=True):
@@ -220,14 +260,6 @@ with panel_col:
             status.update(label="Database Synchronized", state="complete", expanded=False)
         
         st.toast('NISAR Telemetry updated successfully!', icon='🛰️')
-
-
-
-
-
-
-
-
 
 # 7. CUSTOM DIVIDER
 st.markdown("<br><br>", unsafe_allow_html=True)
@@ -271,31 +303,17 @@ with col_centro:
 
 st.markdown("<br><br><br>", unsafe_allow_html=True)
 
-
-
-t1, t2, t3, t4, t5 = st.columns(5)
-def render_team_member(columna, imagen_url, nombre, rol):
-    with columna:
-        st.markdown(f"""
-            <img src="{imagen_url}" class="team-circle">
-            <div class="team-name">{nombre}</div>
-            <div class="team-role">{rol}</div>
-        """, unsafe_allow_html=True)
-
-# 9. TEAM SECTION
+# 9. TEAM SECTION (Limpio y unificado)
 st.markdown("<h2 style='text-align: center;'>Meet the crew</h2><br>", unsafe_allow_html=True)
 
 t1, t2, t3, t4, t5 = st.columns(5)
 
-# Función actualizada para leer archivos locales automáticamente
 def render_team_member(columna, ruta_imagen, nombre, rol):
     try:
-        # Convierte tu PNG local para que el HTML de Streamlit lo pueda leer
         with open(ruta_imagen, "rb") as image_file:
             encoded_string = base64.b64encode(image_file.read()).decode()
         img_src = f"data:image/png;base64,{encoded_string}"
     except:
-        # Si te equivocas en el nombre o falta la foto, pone el astronauta de respaldo
         img_src = "https://cdn-icons-png.flaticon.com/512/3011/3011270.png"
 
     with columna:
@@ -305,11 +323,10 @@ def render_team_member(columna, ruta_imagen, nombre, rol):
             <div class="team-role">{rol}</div>
         """, unsafe_allow_html=True)
 
-# CAMBIA "foto1.png", "foto2.png", ETC., POR LOS NOMBRES EXACTOS DE TUS ARCHIVOS
 render_team_member(t1, "checho.png", "Sergio Carrasquilla", "Data Scientist")
 render_team_member(t2, "camila.png", "Camila Perez", "Frontend Dev")
 render_team_member(t3, "angie.png", "Angie Gómez", "Radar Specialist")
-render_team_member(t4, "leon.png", "Laonardo Tovar", "UX/UI Design")
+render_team_member(t4, "leon.png", "Leonardo Tovar", "UX/UI Design")
 render_team_member(t5, "moteo.png", "Mateo Maldonado", "Project Manager")
 
 st.markdown("<br><br>", unsafe_allow_html=True)
