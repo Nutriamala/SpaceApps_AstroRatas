@@ -121,8 +121,8 @@ p, span, div, li { font-family: 'Space Grotesk', sans-serif; }
             "lillo by";
         row-gap: 20px;
     }
-    .header-left  { justify-content: center; margin-top: -15px; }
-    .header-right { justify-content: center; align-items: center; padding-top: 0; margin-top: -15px; }
+    .header-left  { justify-content: center; margin-top: -30px; }
+    .header-right { justify-content: center; align-items: center; padding-top: 0; margin-top: -30px; }
     .header-left img  { width: 130px; }
     .header-right img { width: 110px; } 
    
