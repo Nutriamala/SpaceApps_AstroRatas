@@ -71,20 +71,20 @@ ZONAS = {
 </div>"""
     },
     
-    # ---------- POINT 2: SAN ISIDRO ----------
+    # ---------- POINT 2: SAN ISIDRO (¡NOMBRES ACTUALIZADOS!) ----------
     "san_isidro": {
         "nombre": "San Isidro",
         "detalle": "Río Quito, Chocó",
         "lat": 5.62465, "lon": -76.7490,     
         "color": "#FC8E42",
         "poligono": [(-76.795, 5.580), (-76.703, 5.580), (-76.703, 5.670), (-76.795, 5.670), (-76.795, 5.580)],
-        "gif": "gifSI.gif",                  
+        "gif": "sangif.gif",                  
         "texto_gif": "Animation of the scientific product NISAR L2 GCOV, obtained directly from the official consultation platform. It presents radar backscatter information of the Earth's surface, without additional processing by our team.",
         "titulo_grande": "Multitemporal Analysis",
-        "graf_grande": "multitemporalSI.png",  
+        "graf_grande": "multisan.png",  
         "texto_grande": "635.20 hectares with indications of change were identified, of which 196.56 ha show a persistent decrease in the HV signal. The patches allow locating the priority areas for analysis.",
         "titulo_cuadrada": "Radar Variations",
-        "graf_cuadrada": "mapaSI.png",       
+        "graf_cuadrada": "mapasan.png",       
         "texto_cuadrada": "The maps show variations in the HH and HV radar signal, with outstanding changes in the Río Quito corridor, possibly associated with humidity, fluvial dynamics, or vegetation alterations.",
         
         "stats_html": """<div class="sar-stats-container">
@@ -156,8 +156,7 @@ def src_media(ruta):
         ext = ruta.lower().rsplit(".", 1)[-1]
         mime = {"gif": "image/gif", "png": "image/png", "jpg": "image/jpeg", "jpeg": "image/jpeg", "webp": "image/webp"}.get(ext, "image/png")
         return f"data:{mime};base64,{data}"
-    except Exception as e:
-        st.error(f"No se encontró la imagen: {ruta}. Error: {e}")
+    except:
         return IMG_DEMO[0]
 
 @st.cache_data(show_spinner=False)
