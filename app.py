@@ -20,7 +20,7 @@ def obtener_base64(ruta_archivo):
 fondo_gif = obtener_base64("fondo_header.gif")
 
 # =====================================================================
-# 🔁 CONFIGURACIÓN DE LOS 3 PUNTOS DEL MAPA (TODO EN INGLÉS)
+# 🔁 CONFIGURACIÓN DE LOS PUNTOS DEL MAPA (TODO EN INGLÉS)
 # =====================================================================
 IMG_DEMO = [
     "https://images.unsplash.com/photo-1511497584788-876760111969?q=80&w=1000&auto=format&fit=crop",
@@ -36,18 +36,14 @@ ZONAS = {
         "detalle": "Medio Atrato, Chocó",
         "lat": 5.90, "lon": -76.78,
         "color": "#FA5C5E",
-        
         "gif": "baudogif.gif", 
         "texto_gif": "This visualization corresponds to a frame of the GIF animation generated directly from GCOV SAR radar products extracted from ASF Vertex for the Río Quito region, Chocó, comparing October 22 and November 3, 2026. By using the HH and HV bands in their raw state, without applying any spatial smoothing filter, the texture and the original backscatter response are fully preserved, allowing an accurate appreciation of the structural patterns and natural radiometric changes that occurred in the area between both dates.",
-        
         "titulo_grande": "Multitemporal Analysis",
         "graf_grande": "baudomultitiempo.png",          
         "texto_grande": "The figure compares the NISAR images of Río Quito from October 22 and November 3, 2026. In the initial and final HV maps, dark tones indicate a weak signal, such as that observed in the riverbed. In the HH and HV change maps, blue indicates signal increases and red indicates decreases. The HV change rate expresses this difference in dB per month. The last panel shows the areas pending validation, with HV decreases in red and ambiguous changes in yellow.", 
-        
         "titulo_cuadrada": "Radar Variations",
         "graf_cuadrada": "baudomapa.png",        
         "texto_cuadrada": "The map on the left shows HV decreases in red and ambiguous changes in yellow. By grouping neighboring pixels with HV decrease, 112 scattered patches were identified. In the map on the right, all these patches appear in gray because they fell below the 0.50 ha threshold. The largest occupies 0.32 ha.",
-        
         "stats_html": """<div class="sar-stats-container">
 <div class="stats-header">
 <div>
@@ -71,7 +67,7 @@ ZONAS = {
 </div>"""
     },
     
-    # ---------- POINT 2: SAN ISIDRO (¡NOMBRES ACTUALIZADOS!) ----------
+    # ---------- POINT 2: SAN ISIDRO ----------
     "san_isidro": {
         "nombre": "San Isidro",
         "detalle": "Río Quito, Chocó",
@@ -86,7 +82,6 @@ ZONAS = {
         "titulo_cuadrada": "Radar Variations",
         "graf_cuadrada": "mapasan.png",       
         "texto_cuadrada": "The maps show variations in the HH and HV radar signal, with outstanding changes in the Río Quito corridor, possibly associated with humidity, fluvial dynamics, or vegetation alterations.",
-        
         "stats_html": """<div class="sar-stats-container">
 <div class="sar-stats-title">TOTAL ANALYZED SURFACE</div>
 <div class="sar-stats-total">10,240 ha</div>
@@ -117,7 +112,6 @@ ZONAS = {
         "titulo_cuadrada": "Radar Variations",
         "graf_cuadrada": "patomapa.png",        
         "texto_cuadrada": "The maps show the variations of the HH and HV radar signal between June 26 and October 12, 2026. The change is distributed almost uniformly, without extensive areas of decrease. The most visible contrasts follow the north-south linear feature and the eastern relief, possibly associated with the radar observation geometry rather than vegetation alterations.",
-        
         "stats_html": """<div class="sar-stats-container">
 <div class="sar-stats-title">TOTAL ANALYZED SURFACE</div>
 <div class="sar-stats-total">10,100.24 ha</div>
@@ -130,6 +124,37 @@ ZONAS = {
 <div class="leg-item"><span class="leg-dot bar-grey"></span><span class="leg-name">No indication</span><span class="leg-val">9,824.72 ha</span><span class="leg-pct">97.27 %</span></div>
 <div class="leg-item"><span class="leg-dot bar-red"></span><span class="leg-name">Persistent HV decrease</span><span class="leg-val">168.76 ha</span><span class="leg-pct">1.67 %</span></div>
 <div class="leg-item"><span class="leg-dot bar-orange"></span><span class="leg-name">Ambiguous change</span><span class="leg-val">106.76 ha</span><span class="leg-pct">1.06 %</span></div>
+</div>
+</div>"""
+    },
+
+    # ---------- POINT 4: NUQUÍ ----------
+    "nuqui": {
+        "nombre": "Nuquí",
+        "detalle": "Continental sector east of Nuquí",
+        "lat": 5.7125, "lon": -77.2200,      
+        "color": "#3498DB",
+        "poligono": [(-77.2651, 5.6673), (-77.1749, 5.6673), (-77.1749, 5.7577), (-77.2651, 5.7577), (-77.2651, 5.6673)],
+        "gif": "nuquigif.gif",                  
+        "texto_gif": "Animation of the scientific product NISAR L2 GCOV, with an overview of Chocó, obtained directly from the official consultation platform. It is the same animation used in the analyses of San Isidro (Río Quito) and Pie de Pató. It presents radar backscatter information of the Earth's surface, without additional processing by our team.",
+        "titulo_grande": "Multitemporal Analysis",
+        "graf_grande": "multinuqui.png",          
+        "texto_grande": "98.28 hectares with indications of change were identified, of which 70.96 ha show a persistent decrease in the HV signal. No patch exceeds 0.5 ha: candidates appear as isolated pixels, without clearly defined priority areas.",
+        "titulo_cuadrada": "Radar Variations",
+        "graf_cuadrada": "mapanuqui.png",        
+        "texto_cuadrada": "The maps show the variations of the HH and HV radar signal between June 24 and October 10, 2026. On the mainland, the change is distributed almost uniformly, without extensive areas of decrease. The most marked contrasts appear in HH over the strip of sea in the northwestern corner, associated with the sea state rather than vegetation alterations.",
+        "stats_html": """<div class="sar-stats-container">
+<div class="sar-stats-title">TOTAL ANALYZED SURFACE</div>
+<div class="sar-stats-total">10,140.48 ha</div>
+<div class="sar-stacked-bar">
+<div class="bar-grey" style="width: 99.03%;"></div>
+<div class="bar-red" style="width: 0.70%;"></div>
+<div class="bar-orange" style="width: 0.27%;"></div>
+</div>
+<div class="sar-legend">
+<div class="leg-item"><span class="leg-dot bar-grey"></span><span class="leg-name">No indication</span><span class="leg-val">10,042.16 ha</span><span class="leg-pct">99.03 %</span></div>
+<div class="leg-item"><span class="leg-dot bar-red"></span><span class="leg-name">Persistent HV decrease</span><span class="leg-val">70.96 ha</span><span class="leg-pct">0.70 %</span></div>
+<div class="leg-item"><span class="leg-dot bar-orange"></span><span class="leg-name">Ambiguous change</span><span class="leg-val">27.32 ha</span><span class="leg-pct">0.27 %</span></div>
 </div>
 </div>"""
     },
