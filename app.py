@@ -121,11 +121,11 @@ p, span, div, li { font-family: 'Space Grotesk', sans-serif; }
             "lillo by";
         row-gap: 20px;
     }
-    .header-left  { justify-content: center; }
-    .header-right { justify-content: center; align-items: center; padding-top: 0; }
+    .header-left  { justify-content: center; margin-top: -15px; }
+    .header-right { justify-content: center; align-items: center; padding-top: 0; margin-top: -15px; }
     .header-left img  { width: 130px; }
-    .header-right img { width: 110px; }
-    
+    .header-right img { width: 110px; } 
+   
     .team-circle { width: 80px !important; height: 80px !important; }
     .team-name { font-size: 0.8rem !important; }
     .team-role { font-size: 0.7rem !important; margin-bottom: 20px !important; }
