@@ -156,7 +156,8 @@ def src_media(ruta):
         ext = ruta.lower().rsplit(".", 1)[-1]
         mime = {"gif": "image/gif", "png": "image/png", "jpg": "image/jpeg", "jpeg": "image/jpeg", "webp": "image/webp"}.get(ext, "image/png")
         return f"data:{mime};base64,{data}"
-    except:
+    except Exception as e:
+        st.error(f"No se encontró la imagen: {ruta}. Error: {e}")
         return IMG_DEMO[0]
 
 @st.cache_data(show_spinner=False)
