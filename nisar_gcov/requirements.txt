@@ -1,0 +1,6 @@
+earthaccess
+numpy
+rasterio
+scipy
+matplotlib
+Pillow
