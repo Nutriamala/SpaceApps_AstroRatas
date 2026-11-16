@@ -554,3 +554,14 @@ render_team_member(t3, "angie.png", "Angie Gómez", "Physics Student / Frontend 
 render_team_member(t4, "leon.png", "Leonardo Tovar", "Physics Student / Image Processing")
 render_team_member(t5, "moteo.png", "Mateo Maldonado", "Physics Student / Remote Sensing")
 st.markdown("<br><br>", unsafe_allow_html=True)
+
+# --- BOTÓN DE GITHUB ---
+st.markdown("""
+<div style='text-align: center; margin-top: 40px; margin-bottom: 40px;'>
+    <a href='https://github.com/Nutriamala/SpaceApps_AstroRatas' target='_blank' style='text-decoration: none;'>
+        <button style='background-color: rgba(1, 17, 36, 0.8); color: #F8F7F2; border: 2px solid #FC8E42; padding: 12px 28px; border-radius: 8px; font-family: "Orbitron", sans-serif; font-size: 1rem; cursor: pointer; box-shadow: 0 0 15px rgba(252, 142, 66, 0.4); letter-spacing: 1px; transition: all 0.3s ease;'>
+            🚀 VIEW REPOSITORY ON GITHUB
+        </button>
+    </a>
+</div>
+""", unsafe_allow_html=True)
