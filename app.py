@@ -83,6 +83,25 @@ p, span, div, li { font-family: 'Space Grotesk', sans-serif; }
 }
 
 /* =========================================
+   HEADER (PC): lilloguito | WW | by
+   ========================================= */
+.header-container {
+    display: grid;
+    grid-template-columns: 1fr 3fr 1fr;
+    grid-template-areas: "lillo ww by";
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    margin: 1rem 0 2rem 0;
+}
+.header-left   { grid-area: lillo; display: flex; justify-content: flex-start; align-items: center; }
+.header-center { grid-area: ww;    display: flex; justify-content: center;     align-items: center; }
+.header-right  { grid-area: by;    display: flex; justify-content: flex-end;   align-items: flex-end; padding-top: 60px; }
+
+.header-left img  { width: 200px; max-width: 100%; height: auto; }
+.header-right img { width: 150px; max-width: 100%; height: auto; }
+
+/* =========================================
    📱 OPTIMIZACIÓN RESPONSIVE (CELULARES)
    ========================================= */
 @media (max-width: 768px) {
@@ -94,22 +113,18 @@ p, span, div, li { font-family: 'Space Grotesk', sans-serif; }
         min-width: 250px !important; 
     }
     
-    /* REORDENAMOS EL HEADER PARA QUE WW QUEDE ARRIBA Y LOS OTROS ABAJO */
-    .header-center { 
-        order: 1 !important; 
-        flex: 0 0 100% !important; 
-        margin-bottom: 20px !important;
+    /* HEADER EN CELULAR: WW arriba, lilloguito y by abajo lado a lado */
+    .header-container {
+        grid-template-columns: 1fr 1fr;
+        grid-template-areas:
+            "ww ww"
+            "lillo by";
+        row-gap: 20px;
     }
-    .header-left { 
-        order: 2 !important; 
-        justify-content: center !important; 
-    }
-    .header-right { 
-        order: 3 !important; 
-        justify-content: center !important; 
-        align-items: center !important; 
-        padding-top: 0 !important; 
-    }
+    .header-left  { justify-content: center; }
+    .header-right { justify-content: center; align-items: center; padding-top: 0; }
+    .header-left img  { width: 130px; }
+    .header-right img { width: 110px; }
     
     .team-circle { width: 80px !important; height: 80px !important; }
     .team-name { font-size: 0.8rem !important; }
@@ -137,28 +152,20 @@ else:
 css += "</style>"
 st.markdown(css, unsafe_allow_html=True)
 
-# 3. HEADER (LILLOGUITO 200px Y WW RESPONSIVE APILADO EN CELULAR)
+# 3. HEADER (lilloguito | WW | by en PC; WW arriba y los otros dos abajo en celular)
 lillo_b64 = obtener_base64("lilloguito.png")
 ww_b64 = obtener_base64("ww.png")
 by_b64 = obtener_base64("by.png")
 
-# Mantenemos tus 200px para lilloguito
-lillo_img = f'<img src="data:image/png;base64,{lillo_b64}" style="width: 200px;">' if lillo_b64 else ''
-# Le metemos la clase para controlarlo desde el celular
+lillo_img = f'<img src="data:image/png;base64,{lillo_b64}">' if lillo_b64 else ''
 ww_img = f'<img src="data:image/png;base64,{ww_b64}" class="logo-centro">' if ww_b64 else '<h1 style="color:#F8F7F2; text-align:center;">DANCING WITH THE SARS</h1>'
-by_img = f'<img src="data:image/png;base64,{by_b64}" style="width: 150px;">' if by_b64 else '<span style="color:#FC8E42; font-style:italic;">by astroRatas</span>'
+by_img = f'<img src="data:image/png;base64,{by_b64}">' if by_b64 else '<span style="color:#FC8E42; font-style:italic;">by astroRatas</span>'
 
 st.markdown(f"""
-<div class="header-container" style="display: flex; flex-wrap: wrap; flex-direction: row; justify-content: space-between; align-items: center; width: 100%; margin-top: 1rem; margin-bottom: 2rem;">
-<div class="header-left" style="flex: 1; display: flex; justify-content: flex-start; align-items: center;">
-{lillo_img}
-</div>
-<div class="header-center" style="flex: 3; display: flex; justify-content: center; align-items: center;">
-{ww_img}
-</div>
-<div class="header-right" style="flex: 1; display: flex; justify-content: flex-end; align-items: flex-end; padding-top: 60px;">
-{by_img}
-</div>
+<div class="header-container">
+<div class="header-left">{lillo_img}</div>
+<div class="header-center">{ww_img}</div>
+<div class="header-right">{by_img}</div>
 </div>
 """, unsafe_allow_html=True)
 
