@@ -94,6 +94,23 @@ p, span, div, li { font-family: 'Space Grotesk', sans-serif; }
         min-width: 250px !important; 
     }
     
+    /* REORDENAMOS EL HEADER PARA QUE WW QUEDE ARRIBA Y LOS OTROS ABAJO */
+    .header-center { 
+        order: 1 !important; 
+        flex: 0 0 100% !important; 
+        margin-bottom: 20px !important;
+    }
+    .header-left { 
+        order: 2 !important; 
+        justify-content: center !important; 
+    }
+    .header-right { 
+        order: 3 !important; 
+        justify-content: center !important; 
+        align-items: center !important; 
+        padding-top: 0 !important; 
+    }
+    
     .team-circle { width: 80px !important; height: 80px !important; }
     .team-name { font-size: 0.8rem !important; }
     .team-role { font-size: 0.7rem !important; margin-bottom: 20px !important; }
@@ -120,7 +137,7 @@ else:
 css += "</style>"
 st.markdown(css, unsafe_allow_html=True)
 
-# 3. HEADER (LILLOGUITO 200px Y WW RESPONSIVE)
+# 3. HEADER (LILLOGUITO 200px Y WW RESPONSIVE APILADO EN CELULAR)
 lillo_b64 = obtener_base64("lilloguito.png")
 ww_b64 = obtener_base64("ww.png")
 by_b64 = obtener_base64("by.png")
@@ -132,14 +149,14 @@ ww_img = f'<img src="data:image/png;base64,{ww_b64}" class="logo-centro">' if ww
 by_img = f'<img src="data:image/png;base64,{by_b64}" style="width: 150px;">' if by_b64 else '<span style="color:#FC8E42; font-style:italic;">by astroRatas</span>'
 
 st.markdown(f"""
-<div style="display: flex; flex-direction: row; justify-content: space-between; align-items: center; width: 100%; margin-top: 1rem; margin-bottom: 2rem;">
-<div style="flex: 1; display: flex; justify-content: flex-start; align-items: center;">
+<div class="header-container" style="display: flex; flex-wrap: wrap; flex-direction: row; justify-content: space-between; align-items: center; width: 100%; margin-top: 1rem; margin-bottom: 2rem;">
+<div class="header-left" style="flex: 1; display: flex; justify-content: flex-start; align-items: center;">
 {lillo_img}
 </div>
-<div style="flex: 3; display: flex; justify-content: center; align-items: center;">
+<div class="header-center" style="flex: 3; display: flex; justify-content: center; align-items: center;">
 {ww_img}
 </div>
-<div style="flex: 1; display: flex; justify-content: flex-end; align-items: flex-end; padding-top: 60px;">
+<div class="header-right" style="flex: 1; display: flex; justify-content: flex-end; align-items: flex-end; padding-top: 60px;">
 {by_img}
 </div>
 </div>
